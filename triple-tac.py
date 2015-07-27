@@ -149,19 +149,19 @@ def display_winner(score):
 def tally_score(cube):
   victory_lines = collect_victory_lines(cube)
   #display_victory_lines(victory_lines)         #dev line
-  victory_octothorpe = [ circle , circle , circle ]
-  victory_tilde =      [ star , star , star ]
-  octothorpe_lines = 0
-  tilde_lines      = 0
+  victory_circle = [ circle , circle , circle ]
+  victory_star   = [ star , star , star ]
+  circle_lines = 0
+  star_lines   = 0
   attainable_lines = 0
   for line in victory_lines:
-    if line == victory_octothorpe:
-      octothorpe_lines += 1
-    elif line == victory_tilde:
-      tilde_lines      += 1
+    if line == victory_circle:
+      circle_lines += 1
+    elif line == victory_star:
+      star_lines   += 1
     elif circle not in line or star not in line:
       attainable_lines += 1
-  return { circle:octothorpe_lines, star:tilde_lines, "attainable":attainable_lines }
+  return { circle:circle_lines, star:star_lines, "attainable":attainable_lines }
 
 def display_victory_lines(victory_lines): #dev function
   counter = 0
@@ -315,28 +315,26 @@ def determine_selection(turn, cube):
   for move in offense_values:
     value = offense_values[move] + defense_values[move]
     combined_values[move] = value
-    print "%s - %.2f + %.2f = %.2f" % ( move , offense_values[move] , defense_values[move] , combined_values[move] )
+    #print "%s - %.2f + %.2f = %.2f" % ( move , offense_values[move] , defense_values[move] , combined_values[move] )
   highest_value = 0.0
   for move in combined_values:
     if combined_values[move] > highest_value:
       highest_value = combined_values[move]
-  print "highest_value = %.2f" % highest_value
+  #print "highest_value = %.2f" % highest_value
   best_moves = []
   for move in combined_values:
     if combined_values[move] == highest_value:
       best_moves.append(move)
-  print best_moves
+  #print best_moves
   selection = random.choice(best_moves)
-  print selection
+  print "I'll take %s" % selection
   return selection
-
 
 def determine_enemy(turn):
   if turn == circle:
     return star
   elif turn == star:
     return circle
-
 
 def analyze_defense(turn, cube):
   enemy = determine_enemy(turn)
@@ -362,9 +360,8 @@ def analyze_defense(turn, cube):
             defense_values[key] += 0.49
         elif turn not in line:
           defense_values[key] += 0.33
-
+  #
   return defense_values
-
 
 def analyze_offense(turn, cube):
   enemy = determine_enemy(turn)
@@ -396,4 +393,7 @@ def analyze_offense(turn, cube):
 
 
 # main function call
+
 ask_to_play()
+
+
